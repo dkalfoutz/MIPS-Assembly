@@ -1,0 +1,50 @@
+# This program implements the algorithm of "Insertion Sort" and print the sorted array to the terminal
+
+.data
+# Constant strings to be output to the terminal and arrays
+Input_Integer:	.asciiz "Please give a positive integer n >0: "
+Wrong_Number:	.asciiz "Wrong number. Try again.\n"
+Fill_Array_1:	.asciiz "Please give "
+Fill_Array_2:	.asciiz " integers to be sorted in the array:\n"
+Result:		.asciiz "The created sorted array is:\n"
+Space:		.asciiz "  "
+Change_Line:	.asciiz "\n"
+
+.align 2							# Size of the elements of the array = 4 bytes
+Array:	.space 400					# Max size of the array 400 bytes = 100 elements
+
+
+# Instructions always follow the .text directive
+.text
+.globl main						# Label "main" must be global
+main:
+	# Asks the user to input the info needed to proceed
+	AskInteger:	addi $v0, $0, 4
+			la $a0, Input_Integer
+			syscall
+
+			addi $v0, $0, 5
+			syscall
+			add $s0, $v0, $0
+
+			bgtz $s0, Continue
+
+			addi $v0, $0, 4
+			la $a0, Wrong_Number
+			syscall
+
+			j AskInteger
+
+	Continue:		addi $v0, $0, 4
+			la $a0, Fill_Array_1
+			syscall
+
+			addi $v0, $0, 1
+			add $a0, $s0, $0
+			syscall
+
+			addi $v0, $0, 4
+			la $a0, Fill_Array_2
+			syscall
+
+			
